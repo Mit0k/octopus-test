@@ -1,0 +1,34 @@
+step "upgrade-a-helm-chart" {
+    name = "Upgrade a Helm Chart"
+    properties = {
+        Octopus.Action.TargetRoles = "test_role"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        properties = {
+            Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace uat"
+            Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.KeyValues = "{}"
+            Octopus.Action.Helm.Namespace = "uat"
+            Octopus.Action.Helm.ReleaseName = "uat"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Helm.Timeout = "10m"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "helm-cloudsmith"
+            Octopus.Action.Package.PackageId = "webapp-color"
+            Octopus.Action.RunOnServer = "true"
+        }
+        worker_pool = "default-worker-pool-1"
+
+        packages {
+            acquisition_location = "Server"
+            feed = "helm-cloudsmith"
+            package_id = "webapp-color"
+            properties = {
+                SelectionMode = "immediate"
+                ValuesFilePath = "/values/uat_values.yaml"
+            }
+        }
+    }
+}
