@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deploy
+spec:
+  minReadySeconds: 20
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: webapp
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        name: webapp
+    spec:
+      containers:
+      - image: kodekloud/webapp-color:v1
+        imagePullPolicy: IfNotPresent
+        name: simple-webapp
+        env:
+        - name: APP_COLOR
+          value: {{ .Values.env.APP_COLOR  }}
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
