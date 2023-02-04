@@ -1,4 +1,5 @@
 step "upgrade-a-helm-chart" {
+    condition = "Always"
     name = "Upgrade a Helm Chart"
     properties = {
         Octopus.Action.TargetRoles = "dev"
