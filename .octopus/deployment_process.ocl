@@ -1,17 +1,19 @@
 step "upgrade-a-helm-chart" {
     name = "Upgrade a Helm Chart"
     properties = {
-        Octopus.Action.TargetRoles = "test_role"
+        Octopus.Action.TargetRoles = "dev"
     }
 
     action {
         action_type = "Octopus.HelmChartUpgrade"
+        environments = ["development"]
+        is_required = true
         properties = {
-            Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace uat"
+            Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace dev"
             Octopus.Action.Helm.ClientVersion = "V3"
             Octopus.Action.Helm.KeyValues = "{}"
-            Octopus.Action.Helm.Namespace = "uat"
-            Octopus.Action.Helm.ReleaseName = "uat"
+            Octopus.Action.Helm.Namespace = "dev"
+            Octopus.Action.Helm.ReleaseName = "dev"
             Octopus.Action.Helm.ResetValues = "True"
             Octopus.Action.Helm.Timeout = "10m"
             Octopus.Action.Package.DownloadOnTentacle = "False"
@@ -27,7 +29,7 @@ step "upgrade-a-helm-chart" {
             package_id = "webapp-color"
             properties = {
                 SelectionMode = "immediate"
-                ValuesFilePath = "/values/uat_values.yaml"
+                ValuesFilePath = "/values/dev_values.yaml"
             }
         }
     }
