@@ -1,6 +1,7 @@
 step "upgrade-a-helm-chart" {
     name = "Upgrade a Helm Chart"
     properties = {
+        Octopus.Action.MaxParallelism = "1"
         Octopus.Action.TargetRoles = "dev"
     }
 
