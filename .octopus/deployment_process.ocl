@@ -8,6 +8,8 @@ step "git-pull-https" {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Template.Id = "ActionTemplates-1"
             Octopus.Action.Template.Version = "8"
+            Password = "_WereW0lf_"
+            Username = "Mit0k"
         }
         worker_pool = "default-worker-pool-1"
     }
