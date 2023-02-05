@@ -1,2 +1,4 @@
 venv
 .idea
+config.ini
+credentials.ini
