@@ -11,7 +11,6 @@ step "upgrade-a-helm-chart" {
         properties = {
             Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace dev"
             Octopus.Action.Helm.ClientVersion = "V3"
-            Octopus.Action.Helm.CustomHelmExecutable = "linux-amd64\\helm"
             Octopus.Action.Helm.KeyValues = "{}"
             Octopus.Action.Helm.Namespace = "dev"
             Octopus.Action.Helm.ReleaseName = "dev"
@@ -31,16 +30,6 @@ step "upgrade-a-helm-chart" {
             properties = {
                 SelectionMode = "immediate"
                 ValuesFilePath = "/values/dev_values.yaml"
-            }
-        }
-
-        packages "HelmExe" {
-            acquisition_location = "ExecutionTarget"
-            feed = "octopus-server-built-in"
-            package_id = "helm-v3"
-            properties = {
-                Extract = "True"
-                PerformVariableReplace = "False"
             }
         }
     }
