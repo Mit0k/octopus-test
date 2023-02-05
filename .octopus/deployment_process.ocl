@@ -1,3 +1,18 @@
+step "git-pull-https" {
+    name = "Get Values Files"
+
+    action {
+        properties = {
+            GitHttpsBranchName = "master"
+            GitHttpsUrl = "https://github.com/Mit0k/octopus-test.git"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Template.Id = "ActionTemplates-1"
+            Octopus.Action.Template.Version = "8"
+        }
+        worker_pool = "default-worker-pool-1"
+    }
+}
+
 step "upgrade-a-helm-chart" {
     condition = "Always"
     name = "Upgrade a Helm Chart"
@@ -43,20 +58,6 @@ step "upgrade-a-helm-chart" {
                 PerformVariableReplace = "False"
             }
         }
-    }
-}
-
-step "git-pull-https" {
-    name = "Git - Pull (HTTPS)"
-
-    action {
-        properties = {
-            GitHttpsBranchName = "master"
-            Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Template.Id = "ActionTemplates-1"
-            Octopus.Action.Template.Version = "8"
-        }
-        worker_pool = "default-worker-pool-1"
     }
 }
 
