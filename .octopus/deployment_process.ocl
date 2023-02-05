@@ -1,25 +1,3 @@
-step "run-a-script" {
-    name = "Run a Script"
-
-    action {
-        action_type = "Octopus.Script"
-        properties = {
-            Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = <<-EOT
-                pwd
-                tree
-                cd C:\Octopus\Tentacle\Work\*
-                pwd
-                ls
-                tree
-            EOT
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "PowerShell"
-        }
-        worker_pool = "default-worker-pool-1"
-    }
-}
-
 step "upgrade-a-helm-chart" {
     condition = "Always"
     name = "Upgrade a Helm Chart"
