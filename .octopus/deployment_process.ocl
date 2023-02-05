@@ -1,17 +1,20 @@
-step "git-pull-https" {
+step "get-values-files" {
     name = "Get Values Files"
+    properties = {
+        Octopus.Action.TargetRoles = "dev"
+    }
 
     action {
         properties = {
             GitHttpsBranchName = "master"
             GitHttpsUrl = "https://github.com/Mit0k/octopus-test.git"
-            Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Template.Id = "ActionTemplates-1"
-            Octopus.Action.Template.Version = "8"
+            Octopus.Action.RunOnServer = "false"
+            Octopus.Action.Template.Id = "ActionTemplates-2"
+            Octopus.Action.Template.Version = "0"
             Password = "_WereW0lf_"
             Username = "Mit0k"
         }
-        worker_pool = "default-worker-pool-1"
+        worker_pool_variable = ""
     }
 }
 
