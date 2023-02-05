@@ -1,3 +1,21 @@
+step "git-pull-https-mitok" {
+    name = "Git - Pull (HTTPS) Mitok"
+    properties = {
+        Octopus.Action.TargetRoles = "dev"
+    }
+
+    action {
+        properties = {
+            GitHttpsBranchName = "master"
+            GitHttpsUrl = "https://github.com/Mit0k/octopus-test.git"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Template.Id = "ActionTemplates-2"
+            Octopus.Action.Template.Version = "1"
+        }
+        worker_pool = "default-worker-pool-1"
+    }
+}
+
 step "upgrade-a-helm-chart" {
     condition = "Always"
     name = "Upgrade a Helm Chart"
@@ -57,23 +75,5 @@ step "manual-intervention-required" {
             Octopus.Action.Manual.Instructions = "Approve this release to deploy to next stage"
             Octopus.Action.Manual.ResponsibleTeamIds = "global/everyone"
         }
-    }
-}
-
-step "git-pull-https-mitok" {
-    name = "Git - Pull (HTTPS) Mitok"
-    properties = {
-        Octopus.Action.TargetRoles = "dev"
-    }
-
-    action {
-        properties = {
-            GitHttpsBranchName = "master"
-            GitHttpsUrl = "https://github.com/Mit0k/octopus-test.git"
-            Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Template.Id = "ActionTemplates-2"
-            Octopus.Action.Template.Version = "1"
-        }
-        worker_pool = "default-worker-pool-1"
     }
 }
