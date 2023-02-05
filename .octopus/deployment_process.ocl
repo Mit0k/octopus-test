@@ -1,3 +1,18 @@
+step "run-a-script" {
+    name = "Run a Script"
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "git clone https://github.com/Mit0k/octopus-test.git"
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "Bash"
+        }
+        worker_pool = "default-worker-pool-1"
+    }
+}
+
 step "git-pull-https-mitok" {
     name = "Git - Pull (HTTPS) Mitok"
     properties = {
@@ -5,6 +20,7 @@ step "git-pull-https-mitok" {
     }
 
     action {
+        is_disabled = true
         properties = {
             GitHttpsBranchName = "master"
             GitHttpsUrl = "https://github.com/Mit0k/octopus-test.git"
@@ -75,20 +91,5 @@ step "manual-intervention-required" {
             Octopus.Action.Manual.Instructions = "Approve this release to deploy to next stage"
             Octopus.Action.Manual.ResponsibleTeamIds = "global/everyone"
         }
-    }
-}
-
-step "run-a-script" {
-    name = "Run a Script"
-
-    action {
-        action_type = "Octopus.Script"
-        properties = {
-            Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "git clone https://github.com/Mit0k/octopus-test.git"
-            Octopus.Action.Script.ScriptSource = "Inline"
-            Octopus.Action.Script.Syntax = "Bash"
-        }
-        worker_pool = "default-worker-pool-1"
     }
 }
