@@ -1,8 +1,5 @@
 step "git-pull-https-mitok" {
     name = "Git - Pull (HTTPS) Mitok"
-    properties = {
-        Octopus.Action.TargetRoles = "dev"
-    }
 
     action {
         properties = {
