@@ -30,7 +30,7 @@ step "upgrade-a-helm-chart" {
             package_id = "webapp-color"
             properties = {
                 SelectionMode = "immediate"
-                ValuesFilePath = "/values/dev_values.yaml"
+                ValuesFilePath = "values/dev_values.yaml"
             }
         }
 
