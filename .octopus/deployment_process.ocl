@@ -88,7 +88,7 @@ step "approve-to-prod" {
 
     action {
         action_type = "Octopus.Manual"
-        environments = ["staging"]
+        environments = ["production"]
         properties = {
             Octopus.Action.Manual.BlockConcurrentDeployments = "True"
             Octopus.Action.Manual.Instructions = "Approve this release to deploy to next stage"
@@ -106,7 +106,7 @@ step "deploy-prod" {
 
     action {
         action_type = "Octopus.HelmChartUpgrade"
-        environments = ["prodelopment"]
+        environments = ["production"]
         is_required = true
         properties = {
             Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace octopus-prod"
