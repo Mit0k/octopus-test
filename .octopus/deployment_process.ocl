@@ -37,7 +37,7 @@ step "deploy-dev" {
 }
 
 step "approve-to-uat" {
-    name = "Manual Intervention Required"
+    name = "[UAT] Manual Intervention Required"
 
     action {
         action_type = "Octopus.Manual"
@@ -84,7 +84,7 @@ step "deploy-uat" {
 }
 
 step "approve-to-prod" {
-    name = "Manual Intervention Required"
+    name = "[PROD] Manual Intervention Required"
 
     action {
         action_type = "Octopus.Manual"
