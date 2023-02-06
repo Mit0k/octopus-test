@@ -1,6 +1,6 @@
 step "upgrade-a-helm-chart" {
     condition = "Always"
-    name = "Upgrade a Helm Chart"
+    name = "Deploy Dev"
     properties = {
         Octopus.Action.TargetRoles = "dev"
     }
@@ -9,9 +9,8 @@ step "upgrade-a-helm-chart" {
         action_type = "Octopus.HelmChartUpgrade"
         is_required = true
         properties = {
-            Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace dev"
+            Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace octopus-dev"
             Octopus.Action.Helm.ClientVersion = "V3"
-            Octopus.Action.Helm.CustomHelmExecutable = "windows-amd64\\helm.exe"
             Octopus.Action.Helm.KeyValues = "{}"
             Octopus.Action.Helm.Namespace = "dev"
             Octopus.Action.Helm.ReleaseName = "dev"
@@ -30,17 +29,7 @@ step "upgrade-a-helm-chart" {
             package_id = "webapp-color"
             properties = {
                 SelectionMode = "immediate"
-                ValuesFilePath = ""
-            }
-        }
-
-        packages "HelmExe" {
-            acquisition_location = "ExecutionTarget"
-            feed = "octopus-server-built-in"
-            package_id = "helm-v3"
-            properties = {
-                Extract = "True"
-                PerformVariableReplace = "False"
+                ValuesFilePath = "values/dev_values.yaml"
             }
         }
     }
