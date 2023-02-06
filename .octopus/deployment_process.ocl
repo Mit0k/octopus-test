@@ -12,11 +12,12 @@ step "deploy-dev" {
         properties = {
             Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace octopus-dev"
             Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.CustomHelmExecutable = "windows-amd64\\helm.exe"
             Octopus.Action.Helm.KeyValues = "{}"
             Octopus.Action.Helm.Namespace = "octopus-dev"
             Octopus.Action.Helm.ReleaseName = "dev"
             Octopus.Action.Helm.ResetValues = "True"
-            Octopus.Action.Helm.Timeout = "10m"
+            Octopus.Action.Helm.Timeout = "300"
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "helm-cloudsmith"
             Octopus.Action.Package.PackageId = "webapp-color"
@@ -31,6 +32,16 @@ step "deploy-dev" {
             properties = {
                 SelectionMode = "immediate"
                 ValuesFilePath = "values/dev_values.yaml"
+            }
+        }
+
+        packages "HelmExe" {
+            acquisition_location = "ExecutionTarget"
+            feed = "octopus-server-built-in"
+            package_id = "helm-v3"
+            properties = {
+                Extract = "True"
+                PerformVariableReplace = "False"
             }
         }
     }
@@ -61,6 +72,7 @@ step "deploy-uat" {
         environments = ["staging"]
         properties = {
             Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.CustomHelmExecutable = "windows-amd64\\helm.exe"
             Octopus.Action.Helm.Namespace = "octopus-uat"
             Octopus.Action.Helm.ReleaseName = "uat"
             Octopus.Action.Helm.ResetValues = "True"
@@ -78,6 +90,15 @@ step "deploy-uat" {
             properties = {
                 SelectionMode = "immediate"
                 ValuesFilePath = "values/uat-values"
+            }
+        }
+
+        packages "HelmExe" {
+            acquisition_location = "ExecutionTarget"
+            feed = "octopus-server-built-in"
+            properties = {
+                Extract = "True"
+                PerformVariableReplace = "False"
             }
         }
     }
@@ -111,6 +132,7 @@ step "deploy-prod" {
         properties = {
             Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace octopus-prod"
             Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.CustomHelmExecutable = "windows-amd64\\helm.exe"
             Octopus.Action.Helm.KeyValues = "{}"
             Octopus.Action.Helm.Namespace = "octopus-prod"
             Octopus.Action.Helm.ReleaseName = "prod"
@@ -130,6 +152,15 @@ step "deploy-prod" {
             properties = {
                 SelectionMode = "immediate"
                 ValuesFilePath = "values/prod_values.yaml"
+            }
+        }
+
+        packages "HelmExe" {
+            acquisition_location = "ExecutionTarget"
+            feed = "octopus-server-built-in"
+            properties = {
+                Extract = "True"
+                PerformVariableReplace = "False"
             }
         }
     }
