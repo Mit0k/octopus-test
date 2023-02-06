@@ -96,6 +96,7 @@ step "deploy-uat" {
         packages "HelmExe" {
             acquisition_location = "ExecutionTarget"
             feed = "octopus-server-built-in"
+            package_id = "helm-v3"
             properties = {
                 Extract = "True"
                 PerformVariableReplace = "False"
@@ -158,6 +159,7 @@ step "deploy-prod" {
         packages "HelmExe" {
             acquisition_location = "ExecutionTarget"
             feed = "octopus-server-built-in"
+            package_id = "helm-v3"
             properties = {
                 Extract = "True"
                 PerformVariableReplace = "False"
