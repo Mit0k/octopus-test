@@ -1,4 +1,4 @@
-step "upgrade-a-helm-chart" {
+step "deploy-dev" {
     condition = "Always"
     name = "Deploy Dev"
     properties = {
@@ -36,7 +36,7 @@ step "upgrade-a-helm-chart" {
     }
 }
 
-step "manual-intervention-required" {
+step "approve-to-uat" {
     name = "Manual Intervention Required"
 
     action {
@@ -78,6 +78,58 @@ step "deploy-uat" {
             properties = {
                 SelectionMode = "immediate"
                 ValuesFilePath = "values/uat-values"
+            }
+        }
+    }
+}
+
+step "approve-to-prod" {
+    name = "Manual Intervention Required"
+
+    action {
+        action_type = "Octopus.Manual"
+        environments = ["staging"]
+        properties = {
+            Octopus.Action.Manual.BlockConcurrentDeployments = "True"
+            Octopus.Action.Manual.Instructions = "Approve this release to deploy to next stage"
+            Octopus.Action.Manual.ResponsibleTeamIds = "global/everyone"
+        }
+    }
+}
+
+step "deploy-prod" {
+    condition = "Always"
+    name = "Deploy prod"
+    properties = {
+        Octopus.Action.TargetRoles = "prod"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        environments = ["prodelopment"]
+        is_required = true
+        properties = {
+            Octopus.Action.Helm.AdditionalArgs = "--install --create-namespace --namespace octopus-prod"
+            Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.KeyValues = "{}"
+            Octopus.Action.Helm.Namespace = "prod"
+            Octopus.Action.Helm.ReleaseName = "prod"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Helm.Timeout = "10m"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "helm-cloudsmith"
+            Octopus.Action.Package.PackageId = "webapp-color"
+            Octopus.Action.RunOnServer = "true"
+        }
+        worker_pool = "default-worker-pool-1"
+
+        packages {
+            acquisition_location = "Server"
+            feed = "helm-cloudsmith"
+            package_id = "webapp-color"
+            properties = {
+                SelectionMode = "immediate"
+                ValuesFilePath = "values/prod_values.yaml"
             }
         }
     }
