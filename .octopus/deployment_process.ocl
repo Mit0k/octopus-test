@@ -48,3 +48,36 @@ step "manual-intervention-required" {
         }
     }
 }
+
+step "deploy-uat" {
+    name = "Deploy UAT"
+    properties = {
+        Octopus.Action.TargetRoles = "uat"
+    }
+
+    action {
+        action_type = "Octopus.HelmChartUpgrade"
+        environments = ["staging"]
+        properties = {
+            Octopus.Action.Helm.ClientVersion = "V3"
+            Octopus.Action.Helm.Namespace = "octopus-uat"
+            Octopus.Action.Helm.ReleaseName = "uat"
+            Octopus.Action.Helm.ResetValues = "True"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "helm-cloudsmith"
+            Octopus.Action.Package.PackageId = "webapp-color"
+            Octopus.Action.RunOnServer = "true"
+        }
+        worker_pool = "default-worker-pool-1"
+
+        packages {
+            acquisition_location = "Server"
+            feed = "helm-cloudsmith"
+            package_id = "webapp-color"
+            properties = {
+                SelectionMode = "immediate"
+                ValuesFilePath = "values/uat-values"
+            }
+        }
+    }
+}
