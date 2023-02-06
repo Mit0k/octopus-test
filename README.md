@@ -1,7 +1,8 @@
-kubectl delete namespace octopus
+## Create service account and get token
+1. Apply template \
+`kubectl apply -f octopus-k8s.yaml`
+1. Get token for newly create service account \
+`kubectl create token octopus-sa`
 
-kubectl create namespace octopus
-
-kubectl apply -f octopus-k8s.yaml
-
-kubectl get secret $(kubectl get serviceaccount octopus-sa -o jsonpath="{.secrets[0].name}" --namespace=octopus) -o jsonpath="{.data.token}" --namespace=octopus | base64 --decode
+## Pushing package to repo
+cloudsmith push helm none-5tP/testingoctopus package.tgz

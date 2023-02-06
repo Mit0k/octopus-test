@@ -1,3 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: octopus
 ---
 kind: Namespace
 apiVersion: v1

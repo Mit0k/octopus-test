@@ -2,3 +2,4 @@ venv
 .idea
 config.ini
 credentials.ini
+webapp-color-*.tgz
