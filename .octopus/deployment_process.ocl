@@ -90,7 +90,7 @@ step "deploy-uat" {
             package_id = "webapp-color"
             properties = {
                 SelectionMode = "immediate"
-                ValuesFilePath = "values/uat-values.yaml"
+                ValuesFilePath = "values/uat_values.yaml"
             }
         }
 
